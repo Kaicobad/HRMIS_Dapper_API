@@ -139,7 +139,7 @@ namespace HRMIS_Dapper_API.Controllers
                     };
 
                     var sql = @"SELECT punch_date as PunchDate, card_no as PunchNo, terminal as DeviceNo FROM badge_data 
-                                    WHERE punch_date BETWEEN @DateFrom AND @DateTo ORDER BY punch_date OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY";
+                                      WHERE punch_date BETWEEN @DateFrom AND @DateTo ORDER BY punch_date OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY";
                     using var connection = new SqlConnection(_configuration.GetConnectionString("Constr"));
 
                     var response = await connection.QueryAsync<BadgeDataModel>(sql, parameters);
