@@ -1,3 +1,5 @@
+using HRMIS_Dapper_API.ApiAttribute;
+using HRMIS_Dapper_API.Services.Dapper;
 using HRMIS_Dapper_API.Services.Implementations;
 using HRMIS_Dapper_API.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,7 +29,7 @@ builder.Services.AddAuthentication(option =>
 });
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add<ApiKeyAttribute>());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -70,7 +72,10 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddSingleton<DapperContext>();
+builder.Services.AddScoped<IBadgeDataService, BadgeDataService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+
 
 var app = builder.Build();
 
@@ -88,7 +93,7 @@ else if (app.Environment.IsProduction())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+//app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

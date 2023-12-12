@@ -23,6 +23,7 @@ namespace HRMIS_Dapper_API.Services.Implementations
         {
             try
             {
+
                 var parameters = new { UserEmail = users.Email, UserPasseord = users.Password };
 
                 var sql = "SELECT Id, Name, Password, Email FROM Users WHERE Email = @UserEmail And Password = @UserPasseord";
@@ -41,7 +42,7 @@ namespace HRMIS_Dapper_API.Services.Implementations
                         {
                             Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
                             {
-                        new Claim(ClaimTypes.Email, users.Email),
+                                new Claim(ClaimTypes.Email, users.Email),
                             }),
                             Expires = DateTime.UtcNow.AddMinutes(30),
                             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tkey), SecurityAlgorithms.HmacSha256Signature)
