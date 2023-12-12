@@ -170,5 +170,36 @@ namespace HRMIS_Dapper_API.Controllers
                 };
             }
         }
+
+
+        [Authorize]
+        [HttpGet("GetLastThreeDays")]
+        public async Task<ResponseDTo<BadgeDataModel>> GetlastThree()
+        {
+            try
+            {
+                var sql = "SELECT punch_date as PunchDate,card_no as PunchNo,terminal as DeviceNo FROM badge_data WHERE punch_date BETWEEN DATEADD(DAY, - 3,GETDATE()) AND GETDATE()  ORDER BY punch_date";
+                using var connection = new SqlConnection(_configuration.GetConnectionString("Constr"));
+
+                var response = await connection.QueryAsync<BadgeDataModel>(sql);
+                return new ResponseDTo<BadgeDataModel>
+                {
+                    Success = true,
+                    Message = "Badge Datas Generated",
+                    Data = response.ToList(),
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseDTo<BadgeDataModel>
+                {
+                    Success = false,
+                    Message = ex.Message,
+                    Data = null,
+                };
+            }
+
+        }
     }
 }

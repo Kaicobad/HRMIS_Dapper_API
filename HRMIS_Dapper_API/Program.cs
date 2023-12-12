@@ -59,6 +59,17 @@ builder.Services.AddSwaggerGen(options =>
   });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin", builder =>
+    {
+        builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
