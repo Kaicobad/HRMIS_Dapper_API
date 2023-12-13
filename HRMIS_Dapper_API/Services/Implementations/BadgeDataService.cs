@@ -21,7 +21,7 @@ namespace HRMIS_Dapper_API.Services.Implementations
             try
             {
 
-                var sql = "SELECT punch_date as PunchDate,card_no as PunchNo,terminal as DeviceNo FROM badge_data WHERE punch_date BETWEEN DATEADD(DAY, - 3,GETDATE()) AND GETDATE()  ORDER BY punch_date";
+                var sql = "SELECT punch_date as PunchDate,card_no as PunchNo,terminal as DeviceNo FROM badge_data WITH (NOLOCK) WHERE punch_date BETWEEN DATEADD(DAY, - 3,GETDATE()) AND GETDATE()  ORDER BY punch_date";
                 //using var connection = new SqlConnection(_configuration.GetConnectionString("Constr"));
 
                 using var connection = _context.CreateConnection();
