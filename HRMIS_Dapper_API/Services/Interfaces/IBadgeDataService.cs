@@ -4,6 +4,7 @@ namespace HRMIS_Dapper_API.Services.Interfaces
 {
     public interface IBadgeDataService
     {
-        public Task<IEnumerable<BadgeDataModel>> GetPunchdatLastThreeDays();
+        //public Task<IEnumerable<BadgeDataModel>> GetPunchdatLastThreeDays();
+        public Task<IEnumerable<BadgeDataModel>> GetPunchdataLastThreeDaysDate(string DateParam);
     }
 }

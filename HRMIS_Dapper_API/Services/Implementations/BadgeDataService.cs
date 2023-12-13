@@ -16,18 +16,39 @@ namespace HRMIS_Dapper_API.Services.Implementations
         {
             this._context = context;
         }
-        public async Task<IEnumerable<BadgeDataModel>> GetPunchdatLastThreeDays()
+        //public async Task<IEnumerable<BadgeDataModel>> GetPunchdatLastThreeDays()
+        //{
+        //    try
+        //    {
+
+        //        var sql = "SELECT punch_date as PunchDate,card_no as PunchNo,terminal as DeviceNo FROM badge_data WITH (NOLOCK) WHERE punch_date BETWEEN DATEADD(DAY, - 3,GETDATE()) AND GETDATE()  ORDER BY punch_date";
+        //        //using var connection = new SqlConnection(_configuration.GetConnectionString("Constr"));
+
+        //        using var connection = _context.CreateConnection();
+        //        var hrmCompanyId = await connection.QueryAsync(sql);
+
+        //        var response = await connection.QueryAsync<BadgeDataModel>(sql);
+        //        return response.ToList();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //}
+
+        public async Task<IEnumerable<BadgeDataModel>> GetPunchdataLastThreeDaysDate(String Dateparam)
         {
             try
             {
+                var parameters = new { DateParam = Dateparam };
 
-                var sql = "SELECT punch_date as PunchDate,card_no as PunchNo,terminal as DeviceNo FROM badge_data WITH (NOLOCK) WHERE punch_date BETWEEN DATEADD(DAY, - 3,GETDATE()) AND GETDATE()  ORDER BY punch_date";
-                //using var connection = new SqlConnection(_configuration.GetConnectionString("Constr"));
+                var sql = "SELECT punch_date as PunchDate, card_no as PunchNo, terminal as DeviceNo " +
+                          "FROM badge_data WITH (NOLOCK) " +
+                          "WHERE punch_date BETWEEN DATEADD(DAY, -3, @DateParam) AND @DateParam " +
+                          "ORDER BY punch_date";
 
                 using var connection = _context.CreateConnection();
-                var hrmCompanyId = await connection.QueryAsync(sql);
-
-                var response = await connection.QueryAsync<BadgeDataModel>(sql);
+                var response = await connection.QueryAsync<BadgeDataModel>(sql, parameters);
                 return response.ToList();
             }
             catch (Exception ex)

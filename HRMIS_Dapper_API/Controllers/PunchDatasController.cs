@@ -19,11 +19,11 @@ namespace HRMIS_Dapper_API.Controllers
         }
         [ApiKey]
         [HttpGet("GetLastThreeDaysPunchData")]
-        public async Task<ResponseDTo<BadgeDataModel>> GetLaastThreeDaysPunch()
+        public async Task<ResponseDTo<BadgeDataModel>> GetLaastThreeDaysPunchByDate(string date)
         {
             try
             {
-                var response = await _service.GetPunchdatLastThreeDays();
+                var response = await _service.GetPunchdataLastThreeDaysDate(date);
                 return new ResponseDTo<BadgeDataModel>
                 {
                     Success = true,
