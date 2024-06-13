@@ -92,10 +92,9 @@ if (app.Environment.IsDevelopment())
 //}
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAnyOrigin");
 //app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
